@@ -8,16 +8,18 @@
 
 :put "\n2.Implement them into /system/scripts..."
 /system/script
-remove email-config;
+:if ([find where name=email-config]) do={
+    :put "\tThere's email-config already"
+    } else={add name=email-config source=[/file get email-config.rsc contents]}
 remove backup-config;
-add name=email-config source=[/file get email-config.rsc contents];
 add name=backup-config source=[/file get backup-config.rsc contents];
 
 :put "3. Create a scheduler";
-#/system/scheduler/remove backup-config;
-/system/scheduler/add name="backup-config" start-time="16:48:00" interval=1d on-event="/system script run backup-config"
+:do {/system/scheduler/remove backup-config} on-error={:put "\tScheduler has been set before installation"};
+/system/scheduler/add name="backup-config" start-time="03:15:00" interval=1d on-event="/system script run backup-config"
 
 :put "4. Edit email-creds";
 :delay 4;
+:put "For manual start type:\n\r\t/system/script/run backup-config"
 edit email-config source;
 /
