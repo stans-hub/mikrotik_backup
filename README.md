@@ -4,7 +4,7 @@ Tested in ROS 7.18.2 and 7.21.
    
     /tool/fetch url="https://raw.githubusercontent.com/stans-hub/mikrotik_backup/refs/heads/main/install-backup.rsc" output=file dst-path="install-backup.rsc"; /import install-backup.rsc;
 
-When you do so, email-settings and backup sckript will be downloaded and imported in your router. 
+When you do so, email-settings and backup script will be downloaded and imported in your router. 
 Also setup-script will add new line in section /system/scheduler to check configuration every day. 
 Then editor is going to open email-configuration file. Put there settings for email-service: SMTP-server, login, pass etc.
 
