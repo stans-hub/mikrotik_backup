@@ -7,6 +7,6 @@ Tested in ROS 7.18.2 and 7.21.
 When you do so, email-settings and backup script will be downloaded and imported in your router. 
 Also setup-script will add new line in section /system/scheduler to check configuration every day. 
 Then editor is going to open email-configuration file. Put there settings for email-service: SMTP-server, login, pass etc.
+If you want to edit email-settings later - type: /system/script/edit email-config source
 
-3. For manual start the program use:
-    /system/script/run backup-config
+3. For manual start the program use: /system/script/run backup-config
