@@ -1,9 +1,10 @@
-#This program looks for configuration changes in logs (made by winbox or ssh), when finds, makes backups and log-audit, then emails those files.
+#This program looking for configuration changes in logs (made by winbox or ssh), when finds, makes backups and log-audit, then emails those files.
 ##################################################################################################################################################
+
 :local period 24h;    # Set time from logs should be checked
 
-############## PUT YOUR Email credentials or IMPORT from file   ##################################################################################
 /system/script/run email-config; 
+############## PUT YOUR Email credentials   ##################################################################################
 :global emailtosend
 :global smtpserv
 :global Fromaccount
@@ -11,19 +12,18 @@
 :global pass
 :global SMTPport 
 :global tlsmode          
+###############################################################################################################################
 
+:global curlogstate
 #################################################### START ############################################################
+
 #Check how many changes there are...
 :local currentDate [/system clock get date];
 :local start ( [:totime $currentDate] - $period);
 :log info "LogChecker: Searching logs for config changes (since $start)";
+:local conditions "((message~\"winbox\" or message~\"ssh\") and (message~\"changed\" or message~\"added\" or message~\"removed\" or message~\"imported\" or message~\"reboot\") )";
 
-# Key-words to be looking for in logs
-:local conditions "((message~\"winbox\" or message~\"ssh\") \
-   and (message~\"changed\" or message~\"added\" or message~\"removed\" or message~\"imported\" or message~\"reboot\")\
-   and ([:totime (time)]>$start) )";
-
-:local Changecount [:len [/log find where $conditions ] ];
+:local Changecount [:len [/log find where ($conditions and ([:totime (time)]>=$start) )] ];
 :log info "LogChecker: $Changecount changes were found";
 :if ( $Changecount >"0") do={  
    # If there are changes, send backups and log-audit
@@ -33,18 +33,18 @@
    :local filename "ab-$sysname-$currentDate";
 
    #Save those log-strings with changes
-   /log print file="$filename.txt" where $conditions;
-     :delay 2;
+   /log print file="$filename.txt" where ( $conditions and ([:totime (time)]>=$start) );
+
    # Do backups
    :log info "Creating backup: $filename";
    /system backup save name="$filename";
-     :delay 2;
-   /export file="$filename";
-     :delay 2;
+   :delay 2;
+    /export file="$filename";
+    :delay 2;
    if $emailtosend do={
      :put "Email to smtp-server - $smtpserv";
      :log info "LogChecker: Sending Backup file via E-mail...";
-     # Sending email
+      # Sending email
      /tool e-mail send from="<$Fromaccount>" to=$Toaccount server=$smtpserv port=$SMTPport user=$Fromaccount password=$pass tls=$tlsmode\
         file=("$filename.rsc,$filename.backup,$filename.txt")\
         subject=("$sysname Full Backup $currentDate")\
