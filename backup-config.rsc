@@ -19,11 +19,11 @@
 
 #Check how many changes there are...
 :local currentDate [/system clock get date];
-:local start ( [:totime $currentDate] - $period);
+:local start ( [:timestamp] - $period);
 :log info "LogChecker: Searching logs for config changes (since $start)";
-:local conditions "((message~\"winbox\" or message~\"ssh\") and (message~\"changed\" or message~\"added\" or message~\"removed\" or message~\"imported\" or message~\"reboot\") )";
 
-:local Changecount [:len [/log find where ($conditions and ([:totime (time)]>=$start) )] ];
+:local Changecount [:len [/log find where ( ( (message~"winbox" or message~"ssh") and (message~"changed" or message~"added" or message~"removed" or message~"imported" or message~"reboot") )\
+                                     and ([:totime (time)]>=$start) )] ];
 :log info "LogChecker: $Changecount changes were found";
 :if ( $Changecount >"0") do={  
    # If there are changes, send backups and log-audit
@@ -33,7 +33,8 @@
    :local filename "ab-$sysname-$currentDate";
 
    #Save those log-strings with changes
-   /log print file="$filename.txt" where ( $conditions and ([:totime (time)]>=$start) );
+   /log print file="$filename.txt" where ( ( (message~"winbox" or message~"ssh") and (message~"changed" or message~"added" or message~"removed" or message~"imported" or message~"reboot") )\
+                                    and ([:totime (time)]>=$start) );
 
    # Do backups
    :log info "Creating backup: $filename";
