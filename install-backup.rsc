@@ -1,8 +1,7 @@
-############## PUT YOUR Email credentials   ##################################################################################
-:global emailtosend true;
-:global smtpserv [:resolve "gmail.com"];
-:global Fromaccount "from@gmail.com";
-:global Toaccount "to@gmail.com";
-:global pass "SECRET";
-:global SMTPport 587;
-:global tlsmode "starttls";    # Could be tls/starttls/no
+:put "Import files email-configuration and backup-script..."
+/tool/fetch url="https://github.com/stans-hub/mikrotik_backup/blob/main/email-config.rsc"\
+   output=file dst-path="email-config.rsc";
+/tool/fetch url="https://github.com/stans-hub/mikrotik_backup/blob/main/backup-config.rsc"\
+   output=file dst-path="backup-config.rsc"; 
+/system/script/add name=email-config source=[/file get email-config.rsc contents];
+/system/script/add name=backup-config source=[/file get backup-config.rsc contents];
