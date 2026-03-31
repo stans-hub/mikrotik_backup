@@ -12,6 +12,6 @@ If you want to edit email-settings later - type: /system/script/edit email-confi
 3. For manual start the program use: /system/script/run backup-config
 
 4. Script saves only 30 files (all types), older files will be deleted. You can change the number.
-   Type: /system/script/edit backup-config source
-   Find ":local maxBackups 30"
-   Put the number.
+   
+   Type: /system/script/edit backup-config source;
+   Find ":local maxBackups 30" - Put the number.
