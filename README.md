@@ -10,3 +10,5 @@ Then editor is going to open email-configuration file. Put there settings for em
 If you want to edit email-settings later - type: /system/script/edit email-config source
 
 3. For manual start the program use: /system/script/run backup-config
+
+4. Script saves only 30 files (all types), older files will be deleted.
