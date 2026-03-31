@@ -81,7 +81,7 @@
            :for j from=($i + 1) to=($fileListLen - 1) do={
                :local val1 [:pick $fileList $i];
                :local val2 [:pick $fileList $j];
-               :if ([ :pick $val1 0 10 ] > [ :pick $val2 0 10 ]) do={
+               :if ([:totime [ :pick $val1 0 10 ]] > [:totime [ :pick $val2 0 10 ]]) do={
                    :set $fileList [$setArrayElement $fileList $i $val2 $fileListLen ];
                    :set $fileList [$setArrayElement $fileList $j $val1 $fileListLen ];
                } }}
