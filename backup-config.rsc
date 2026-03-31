@@ -90,5 +90,5 @@
            :for i from=0 to=($toDelete - 1) do={
                :local oldEntry [:pick $fileList $i]
                :local oldFileName [:pick $oldEntry 20 [:len $oldEntry]]
-               /file remove $oldFileName
+               :do {/file remove $oldFileName} on-error={}
                :put "Backup: removed $oldFileName"    }}
