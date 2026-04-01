@@ -1,6 +1,6 @@
 1. This program looks for configuration changes in Mikrotik's logs (made by winbox or ssh), and if finds, makes backups and log-audit, then emails those files.
 Tested on ROS 7.18.2 and 7.21.
-2. How to install: login by ssh or winbox (open terminal) and put a command:
+2. How to install/update: login by ssh or winbox (open terminal) and put a command:
    
     /tool/fetch url="https://raw.githubusercontent.com/stans-hub/mikrotik_backup/refs/heads/main/install-backup.rsc" output=file dst-path="install-backup.rsc"; /import install-backup.rsc;
 
