@@ -69,11 +69,10 @@
        # Delete extra files
        :local toDelete ($fileListLen - $maxBackups-1);
        :if ($toDelete > 0) do={
-           :put "$toDelete files to delete";
-           :for i from=0 to=$toDelete do={
+            :for i from=0 to=$toDelete do={
                :local oldFileName [:pick $fileList $i]
                /file remove $oldFileName
-               :put "$i Removed older file: $oldFileName"
+               :put "Removed older file: $oldFileName"
            }
        }
        :log info "LogChecker: Finished...";
