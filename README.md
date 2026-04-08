@@ -2,7 +2,7 @@
 Tested on ROS 7.18.2 and 7.21.
 2. How to install/update: login by ssh or winbox (open terminal) and put a command:
    
- **   /tool/fetch url="https://raw.githubusercontent.com/stans-hub/mikrotik_backup/refs/heads/main/install-backup.rsc" output=file dst-path="install-backup.rsc"; /import install-backup.rsc;**
+    /tool/fetch url="https://raw.githubusercontent.com/stans-hub/mikrotik_backup/refs/heads/main/install-backup.rsc" output=file dst-path="install-backup.rsc"; /import install-backup.rsc;
 
 When you do so, email-settings and backup script will be downloaded and imported in your router. 
 Also setup-script will add new line in section /system/scheduler to check configuration every day. 
